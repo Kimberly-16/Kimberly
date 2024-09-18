@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passport Tracking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="2.webp" alt="Logo" class="logo">
+            <span class="title">Passport Tracking System</span>
+        </div>
+        <div id="datetime"></div>
+        <div class="language-selector">
+            <img id="selected-flag" src="usa.jpg" alt="Selected Flag" class="flag">
+            <select id="language-dropdown">
+                <option value="us" data-flag="us-flag.png">English</option>
+                <option value="es" data-flag="es-flag.png">Español</option>
+                <option value="fr" data-flag="fr-flag.png">Français</option>
+                <!-- Add more languages and flags as needed -->
+            </select>
+            <div class="auth-buttons">
+                <button class="login-btn">Login</button>
+                <button class="signup-btn">Sign Up</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <main>
+            <div class="search-box">
+                <input type="text" id="passport-number" placeholder="Enter passport number" required>
+                <button id="track-button">Track</button>
+            </div>
+            <div id="result"></div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
