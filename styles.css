@@ -1,78 +1,124 @@
-/* Ensure full height and remove default margins */
+/* Remove default margins and set full height */
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%; /* Full height */
+    height: 100%;
+    font-family: 'Poppins', sans-serif; /* Sleek and modern font */
 }
 
-/* Full-page background with image or gradient */
+/* Full-page background image with gradient overlay */
 body {
-    background-image: url('3.jpg'); /* Replace with path to your image */
-    background-size: cover; /* Cover the entire viewport */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent repeating */
-    background-attachment: fixed; /* Fixed background during scroll */
-    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, rgba(20, 30, 48, 0.8), rgba(36, 59, 85, 0.8)), /* Gradient with transparency */
+                url('3.jpg'); /* Background image path */
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Keeps the background fixed during scroll */
     color: #e0e0e0;
+}
+
+/* Navbar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Space out items */
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-bottom: 2px solid rgba(0, 230, 118, 0.8); /* Futuristic bottom border */
+    position: fixed; /* Fix the navbar to the top */
+    width: 100%; /* Ensure full-width */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+
+/* Navbar links */
+.nav-links {
+    display: flex;
+    gap: 20px; /* Spacing between links */
+}
+
+.nav-link {
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.nav-link:hover {
+    background-color: rgba(0, 230, 118, 0.8);
+    color: #000;
+    border-radius: 5px;
+    transform: scale(1.05); /* Slightly enlarge on hover for effect */
 }
 
 /* Header styles */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background: rgba(0, 0, 0, 0.8);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    margin-top: 50px; /* Adjust for fixed navbar */
 }
 
+/* Header content container to align items */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Center align the items */
+}
+
+/* Logo container styling */
 .logo-container {
     display: flex;
     align-items: center;
 }
 
 .logo {
-    width: 40px; /* Adjust based on your logo size */
+    width: 60px; /* Slightly larger logo for more impact */
     height: auto;
-    margin-right: 10px;
+    filter: none; /* Remove the glowing effect */
 }
 
-.title {
-    font-size: 1.5em;
-    color: #00bcd4;
-    text-shadow: 0 0 5px rgba(0, 188, 212, 0.7);
+/* Align navigation and other items in header-right */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-#datetime {
-    font-size: 1em;
-    color: #e0e0e0;
-}
-
+/* Language selector and auth buttons */
 .language-selector {
     display: flex;
     align-items: center;
-    position: absolute;
-    right: 20px;
+    gap: 10px;
 }
 
 .flag {
-    width: 30px; /* Size of the flag */
+    width: 30px;
     height: auto;
-    margin-right: 10px;
+    border-radius: 5px; /* Rounded flags for a sleek look */
+    transition: transform 0.3s; /* Smooth flag scaling on hover */
+}
+
+.flag:hover {
+    transform: scale(1.1);
 }
 
 #language-dropdown {
     padding: 5px;
     border: none;
     border-radius: 5px;
-    background: #333;
-    color: #e0e0e0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
     font-size: 1em;
-    margin-right: 10px;
+    transition: background 0.3s; /* Smooth background change */
 }
 
-/* Adjust the positioning of the buttons */
+#language-dropdown:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
 .auth-buttons {
     display: flex;
     gap: 10px;
@@ -81,15 +127,15 @@ body {
 .login-btn, .signup-btn {
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 25px;
     color: #fff;
     background-color: #007bff;
-    transition: background-color 0.3s ease;
+    transition: all 0.4s ease, transform 0.3s; /* Smooth transitions and scaling */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .login-btn:hover, .signup-btn:hover {
-    background-color: #0056b3;
+    transform: scale(1.1);
 }
 
 .signup-btn {
@@ -100,61 +146,181 @@ body {
     background-color: #218838;
 }
 
-/* Center the search box */
+/* Center the search box with glass effect and constant glowing shadow */
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 50px); /* Adjust height considering the header */
+    height: calc(100vh - 80px);
     padding: 20px;
     box-sizing: border-box;
+    box-shadow: 0 8px 32px rgba(0, 230, 118, 0.6), 0 0 30px rgba(0, 230, 118, 0.6); /* Glowing shadow for the outer container */
 }
 
-main {
-    text-align: center;
-}
-
+/* Glassmorphism effect with constant glowing shadow */
 .search-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.1); /* Glassmorphism effect */
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(136, 110, 110, 0.6), 0 0 40px rgba(3, 209, 245, 0.6); /* Constant glowing box shadow */
+    text-align: center;
+    transition: transform 0.3s; /* Smooth scaling effect */
 }
 
+.search-box:hover {
+    transform: scale(1.02); /* Slightly enlarge on hover */
+}
+
+/* Input field with modern and futuristic look and consistent shadow */
 input[type="text"] {
     padding: 15px;
     width: 100%;
     max-width: 400px;
-    border: 1px solid #333;
-    border-radius: 5px;
-    background: #333;
-    color: #e0e0e0;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    border: none;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.2); /* Transparent background */
+    color: #fff;
+    font-size: 1.2em;
+    text-align: center; /* Center align text for better readability */
+    transition: all 0.3s ease, background 0.3s; /* Smooth transitions */
+}
+
+input[type="text"]::placeholder {
+    color: #ccc; /* Lighter placeholder text */
+    font-size: 1.1em;
 }
 
 input[type="text"]:focus {
-    border-color: #00bcd4;
     outline: none;
+    background: rgba(255, 255, 255, 0.3); /* Slightly more opaque when focused */
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.6); /* Enhanced glowing effect on focus */
+    color: #fff;
 }
 
+/* Button with constant glowing shadow */
 button {
     padding: 15px 30px;
-    background-color: #00bcd4;
+    background-color: #407ceb;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
-    margin-top: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    transition: all 0.4s ease, box-shadow 0.3s; /* Smooth transitions */
 }
 
 button:hover {
-    background-color: #0097a7;
+    background-color: #255dd4;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 230, 118, 0.66), 0 0 30px rgba(0, 230, 118, 0.6); /* Enhanced glow on hover */
 }
 
 #result {
     margin-top: 20px;
+    font-size: 1.3em;
+    color: #fff;
+}
+/* Input field with modern and futuristic look and consistent shadow */
+input[type="text"] {
+    padding: 15px;
+    width: 100%;
+    max-width: 400px;
+    border: none;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.2); /* Transparent background */
+    color: #fff;
     font-size: 1.2em;
+    text-align: center; /* Center align text for better readability */
+    transition: all 0.3s ease, background 0.3s; /* Smooth transitions */
+}
+
+input[type="text"]::placeholder {
+    color: #ccc; /* Lighter placeholder text */
+    font-size: 1.1em;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.3); /* Slightly more opaque when focused */
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.6); /* Enhanced glowing effect on focus */
+    color: #fff;
+}
+/* Login and Signup Page Styles */
+.login-box, .signup-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1); /* Glassmorphism effect */
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(136, 110, 110, 0.6), 0 0 40px rgba(3, 209, 245, 0.6); /* Glowing shadow */
+    text-align: center;
+}
+
+.login-box h2, .signup-box h2 {
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.login-box form, .signup-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-box input, .signup-box input {
+    padding: 15px;
+    border: none;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1em;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.login-box input::placeholder, .signup-box input::placeholder {
+    color: #ccc;
+}
+
+.login-box input:focus, .signup-box input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.6);
+}
+
+.login-box .login-options, .signup-box .login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-box .login-options a, .signup-box .login-options a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-box .login-options a:hover, .signup-box .login-options a:hover {
+    text-decoration: underline;
+}
+
+button {
+    padding: 15px 30px;
+    background-color: #407ceb;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.4s ease;
+}
+
+button:hover {
+    background-color: #255dd4;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 230, 118, 0.66), 0 0 30px rgba(0, 230, 118, 0.6);
 }

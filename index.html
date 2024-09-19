@@ -3,39 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passport Tracking</title>
+    <title>Your Website</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="header">
+    <div class="navbar">
         <div class="logo-container">
             <img src="2.webp" alt="Logo" class="logo">
-            <span class="title">Passport Tracking System</span>
         </div>
-        <div id="datetime"></div>
-        <div class="language-selector">
-            <img id="selected-flag" src="usa.jpg" alt="Selected Flag" class="flag">
-            <select id="language-dropdown">
-                <option value="us" data-flag="us-flag.png">English</option>
-                <option value="es" data-flag="es-flag.png">Español</option>
-                <option value="fr" data-flag="fr-flag.png">Français</option>
-                <!-- Add more languages and flags as needed -->
-            </select>
+        <div class="nav-links">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About Us</a>
+            <a href="#passport-offices" class="nav-link">Passport Offices</a>
+            <a href="#contact" class="nav-link">Contact Us</a>
+        </div>
+        <div class="header-right">
+            <div class="language-selector">
+                <img id="selected-flag" src="usa.jpg" alt="Selected Language" class="flag">
+                <select id="language-dropdown">
+                    <option value="en" data-flag="usa.jpg">English</option>
+                    <option value="es" data-flag="es-flag.png">Español</option>
+                    <!-- Add more language options as needed -->
+                </select>
+            </div>
             <div class="auth-buttons">
-                <button class="login-btn">Login</button>
-                <button class="signup-btn">Sign Up</button>
+                <a href="login.html" class="login-btn">Login</a>
+                <a href="signup.html" class="signup-btn">Sign Up</a>
             </div>
         </div>
     </div>
+
+    <header class="header">
+        <div class="header-content">
+            <!-- Other header content if needed -->
+        </div>
+    </header>
+
     <div class="container">
-        <main>
-            <div class="search-box">
-                <input type="text" id="passport-number" placeholder="Enter passport number" required>
-                <button id="track-button">Track</button>
-            </div>
-            <div id="result"></div>
-        </main>
+        <div class="search-box">
+            <input type="text" placeholder="Enter Tracking Number">
+            <button>Search</button>
+            <div id="result">Results will appear here</div>
+        </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
