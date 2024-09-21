@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Navigation Bar -->
     <div class="navbar">
         <div class="logo-container">
             <a href="index.html">
@@ -14,68 +15,158 @@
             </a>
         </div>
         <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="about.html" class="nav-link">About Us</a>
-            <a href="passport-offices.html" class="nav-link active">Passport Offices</a>
-            <a href="contact.html" class="nav-link">Contact Us</a>
+            <a href="index.html" class="nav-link" data-translate="home">Home</a>
+            <a href="about.html" class="nav-link" data-translate="about">About Us</a>
+            <a href="passport-offices.html" class="nav-link active" data-translate="passportOffices">Passport Offices</a>
+            <a href="contact.html" class="nav-link" data-translate="contact">Contact Us</a>
         </div>
         <div class="header-right">
             <div class="language-selector">
                 <img id="selected-flag" src="usa.jpg" alt="Selected Language" class="flag">
                 <select id="language-dropdown">
                     <option value="en" data-flag="usa.jpg">English</option>
-                    <option value="es" data-flag="es-flag.png">Español</option>
-                    <!-- Add more language options as needed -->
+                    <option value="es" data-flag="Spain_flag_300.png">Español</option>
+                    <option value="ja" data-flag="japan.png">日本語</option>
                 </select>
             </div>
             <div class="auth-buttons">
-                <a href="login.html" class="login-btn">Login</a>
-                <a href="signup.html" class="signup-btn">Sign Up</a>
+                <span id="user-info" class="user-info" style="display: none;">
+                    <span class="username" id="username-display"></span>
+                    <a href="account.html" class="nav-link" data-translate="dashboard">Dashboard</a>
+                    <button id="logout-btn" class="logout-btn">Logout</button>
+                </span>
+                <a href="login.html" class="login-btn" id="login-btn" style="display: inline;" data-translate="login">Login</a>
+                <a href="signup.html" class="signup-btn" id="signup-btn" style="display: inline;" data-translate="signup">Sign Up</a>
             </div>
         </div>
     </div>
 
-    <header class="header">
-        <div class="header-content">
-            <!-- Other header content if needed -->
-        </div>
-    </header>
-
+    <!-- Main Content -->
     <main class="passport-offices">
-        <h1>Passport Offices</h1>
+        <h1 data-translate="passportOfficesTitle">Passport Offices</h1>
         <div class="office-container">
             <!-- Example Office 1 -->
             <div class="office">
                 <img src="aseana.jpg" alt="Office 1" class="office-image">
                 <div class="office-info">
                     <h2>DFA Manila (ASEANA)</h2>
-                    <p>Among the first government departments created following the establishment of the First Philippine Republic. Realizing the need for international recognition of the new government, Aguinaldo assigned Mabini the difficult task of establishing diplomatic relations with friendly countries.</p>
-                <p><b>
-                    Contact No:  (02) 8651 – 9400 <p>
-                    Address : Aseana Business Park, Bradco Avenue, corner Diosdado Macapagal Blvd, Parañaque, 1714 Metro Manila <p>
-                </p></b>
-                
+                    <p>Among the first government departments created following the establishment of the First Philippine Republic...</p>
+                    <p><b data-translate="contactNo">Contact No: (02) 8651 – 9400</b></p>
+                    <p><b data-translate="address">Address: Aseana Business Park, Bradco Avenue, corner Diosdado Macapagal Blvd, Parañaque, 1714 Metro Manila</b></p>
                 </div>
             </div>
             <!-- Example Office 2 -->
             <div class="office">
                 <img src="mega1.jpg" alt="Office 2" class="office-image">
                 <div class="office-info">
-                    <h2>DFA NCR EAST (SM Megamall) </h2>
-                    <p>Address: 7th Floor Building C, SM Megamall, EDSA corner J. Vargas Avenue, Mandaluyong City <p>
-                        
-                    </p>
-                        Contact Number: (02)570-3230
-                        
-                        </p>
+                    <h2>DFA NCR EAST (SM Megamall)</h2>
+                    <p data-translate="office2Address">Address: 7th Floor Building C, SM Megamall, EDSA corner J. Vargas Avenue, Mandaluyong City</p>
+                    <p><b data-translate="contactNumber">Contact Number: (02)570-3230</b></p>
                 </div>
             </div>
             <!-- Add more offices as needed -->
         </div>
     </main>
 
+    <!-- Footer -->
     <footer>
         <!-- Footer content -->
     </footer>
+
+    <!-- Scripts -->
+    <script src="header.js"></script>
+    <script>
+        // Function to handle user login state
+        function checkUserLogin() {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            const userInfo = document.getElementById('user-info');
+            const usernameDisplay = document.getElementById('username-display');
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+
+            if (loggedInUser) {
+                usernameDisplay.textContent = loggedInUser;
+                userInfo.style.display = 'block';
+                loginBtn.style.display = 'none';
+                signupBtn.style.display = 'none';
+            } else {
+                userInfo.style.display = 'none';
+                loginBtn.style.display = 'inline';
+                signupBtn.style.display = 'inline';
+            }
+        }
+
+        // Call the function on page load
+        document.addEventListener("DOMContentLoaded", checkUserLogin);
+
+        // Language translations
+        const translations = {
+            en: {
+                home: "Home",
+                about: "About Us",
+                passportOffices: "Passport Offices",
+                contact: "Contact Us",
+                dashboard: "Dashboard",
+                login: "Login",
+                signup: "Sign Up",
+                passportOfficesTitle: "Passport Offices",
+                contactNo: "Contact No: (02) 8651 – 9400",
+                address: "Address: Aseana Business Park, Bradco Avenue, corner Diosdado Macapagal Blvd, Parañaque, 1714 Metro Manila",
+                office2Address: "Address: 7th Floor Building C, SM Megamall, EDSA corner J. Vargas Avenue, Mandaluyong City",
+                contactNumber: "Contact Number: (02)570-3230"
+            },
+            es: {
+                home: "Inicio",
+                about: "Acerca de",
+                passportOffices: "Oficinas de Pasaporte",
+                contact: "Contáctenos",
+                dashboard: "Tablero",
+                login: "Iniciar Sesión",
+                signup: "Regístrate",
+                passportOfficesTitle: "Oficinas de Pasaporte",
+                contactNo: "Número de Contacto: (02) 8651 – 9400",
+                address: "Dirección: Aseana Business Park, Bradco Avenue, esquina Diosdado Macapagal Blvd, Parañaque, 1714 Metro Manila",
+                office2Address: "Dirección: 7th Floor Building C, SM Megamall, EDSA esquina J. Vargas Avenue, Mandaluyong City",
+                contactNumber: "Número de Contacto: (02)570-3230"
+            },
+            ja: {
+                home: "ホーム",
+                about: "私たちについて",
+                passportOffices: "パスポートオフィス",
+                contact: "お問い合わせ",
+                dashboard: "ダッシュボード",
+                login: "ログイン",
+                signup: "サインアップ",
+                passportOfficesTitle: "パスポートオフィス",
+                contactNo: "連絡先番号: (02) 8651 – 9400",
+                address: "住所: Aseana Business Park, Bradco Avenue, corner Diosdado Macapagal Blvd, Parañaque, 1714 Metro Manila",
+                office2Address: "住所: 7th Floor Building C, SM Megamall, EDSA corner J. Vargas Avenue, Mandaluyong City",
+                contactNumber: "連絡先番号: (02)570-3230"
+            }
+        };
+
+        // Function to change language
+        function changeLanguage(lang) {
+            const elementsToTranslate = document.querySelectorAll('[data-translate]');
+            elementsToTranslate.forEach(el => {
+                const key = el.getAttribute('data-translate');
+                el.textContent = translations[lang][key] || el.textContent;
+            });
+        }
+
+        // Language selector logic
+        document.getElementById('language-dropdown').addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            const flagImage = this.options[this.selectedIndex].getAttribute('data-flag');
+            document.getElementById('selected-flag').src = flagImage;
+            changeLanguage(selectedLanguage);
+        });
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('loggedInUser'); // Clear the logged-in user
+            window.location.href = 'login.html'; // Redirect to the login page
+        });
+    </script>
 </body>
 </html>

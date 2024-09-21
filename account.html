@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="2.webp" alt="Logo" class="logo">
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="passport-offices.html" class="nav-link">Passport Offices</a>
+            <a href="contact.html" class="nav-link">Contact Us</a>
+        </div>
+        <div class="header-right">
+            <div class="user-info" id="user-info">
+                <span id="welcome-message">Welcome back, <span id="username"></span>!</span>
+                <a href="account.html" class="dashboard-btn">My Account</a>
+                <a href="#" class="logout-btn" id="logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Welcome to your dashboard, <span id="user-welcome"></span>!</h1>
+    </div>
+
+    <script src="header.js"></script> <!-- Script for handling user info -->
+</body>
+</html>

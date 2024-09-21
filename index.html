@@ -14,22 +14,28 @@
             </a>
         </div>
         <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="about.html" class="nav-link">About Us</a>
-            <a href="passport-offices.html" class="nav-link">Passport Offices</a>
-            <a href="contact.html" class="nav-link">Contact Us</a>
+            <a href="index.html" class="nav-link" data-translate="home">Home</a>
+            <a href="about.html" class="nav-link" data-translate="about">About Us</a>
+            <a href="passport-offices.html" class="nav-link" data-translate="passportOffices">Passport Offices</a>
+            <a href="contact.html" class="nav-link" data-translate="contact">Contact Us</a>
         </div>
         <div class="header-right">
             <div class="language-selector">
                 <img id="selected-flag" src="usa.jpg" alt="Selected Language" class="flag">
                 <select id="language-dropdown">
                     <option value="en" data-flag="usa.jpg">English</option>
-                    <option value="es" data-flag="es-flag.png">Español</option>
+                    <option value="es" data-flag="Spain_flag_300.png">Español</option>
+                    <option value="ja" data-flag="japan.png">日本語</option>
                 </select>
             </div>
             <div class="auth-buttons">
-                <a href="login.html" class="login-btn">Login</a>
-                <a href="signup.html" class="signup-btn">Sign Up</a>
+                <span id="user-info" class="user-info" style="display: none;">
+                    <span class="username" id="username-display"></span>
+                    <a href="account.html" class="nav-link">Dashboard</a>
+                    <button id="logout-btn" class="logout-btn">Logout</button>
+                </span>
+                <a href="login.html" class="login-btn" id="login-btn" style="display: inline;" data-translate="login">Login</a>
+                <a href="signup.html" class="signup-btn" id="signup-btn" style="display: inline;" data-translate="signup">Sign Up</a>
             </div>
         </div>
     </div>
@@ -47,5 +53,84 @@
             <div id="result">Results will appear here</div>
         </div>
     </div>
+
+    <script>
+        // Language translations
+        const translations = {
+            en: {
+                home: "Home",
+                about: "About Us",
+                passportOffices: "Passport Offices",
+                contact: "Contact Us",
+                login: "Login",
+                signup: "Sign Up",
+            },
+            es: {
+                home: "Inicio",
+                about: "Acerca de",
+                passportOffices: "Oficinas de Pasaporte",
+                contact: "Contáctenos",
+                login: "Iniciar Sesión",
+                signup: "Regístrate",
+            },
+            ja: {
+                home: "ホーム",
+                about: "私たちについて",
+                passportOffices: "パスポートオフィス",
+                contact: "お問い合わせ",
+                login: "ログイン",
+                signup: "サインアップ",
+            }
+        };
+
+        // Function to change language
+        function changeLanguage(lang) {
+            const elementsToTranslate = document.querySelectorAll('[data-translate]');
+            elementsToTranslate.forEach(el => {
+                const key = el.getAttribute('data-translate');
+                el.textContent = translations[lang][key] || el.textContent;
+            });
+        }
+
+        // Function to handle user login state
+        function checkUserLogin() {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            const userInfo = document.getElementById('user-info');
+            const usernameDisplay = document.getElementById('username-display');
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+
+            if (loggedInUser) {
+                usernameDisplay.textContent = loggedInUser;
+                userInfo.style.display = 'block';
+                loginBtn.style.display = 'none';
+                signupBtn.style.display = 'none';
+            } else {
+                userInfo.style.display = 'none';
+                loginBtn.style.display = 'inline';
+                signupBtn.style.display = 'inline';
+            }
+        }
+
+        // Call the function on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            checkUserLogin();
+            changeLanguage('en'); // Set default language
+        });
+
+        // Language selector logic
+        document.getElementById('language-dropdown').addEventListener('change', function() {
+            const selectedLanguage = this.value;
+            const flagImage = this.options[this.selectedIndex].getAttribute('data-flag');
+            document.getElementById('selected-flag').src = flagImage;
+            changeLanguage(selectedLanguage);
+        });
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('loggedInUser'); // Clear the logged-in user
+            window.location.href = 'login.html'; // Redirect to the login page
+        });
+    </script>
 </body>
 </html>

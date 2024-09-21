@@ -472,3 +472,35 @@ body {
 
 /* Other styles remain unchanged */
 
+.user-info {
+    display: none;
+    align-items: center;
+    gap: 15px;
+}
+
+.dashboard-btn {
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #28a745;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.dashboard-btn:hover {
+    background-color: #218838;
+}
+
+.logout-btn {
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #dc3545;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}

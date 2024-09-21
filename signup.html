@@ -16,13 +16,42 @@
     <div class="container">
         <div class="signup-box">
             <h2>Create Account</h2>
-            <form>
-                <input type="text" placeholder="Create Username" required>
-                <input type="password" placeholder="Create Password" required>
-                <input type="password" placeholder="Confirm Password" required>
+            <form id="signup-form">
+                <input type="text" id="signup-username" placeholder="Create Username" required>
+                <input type="password" id="signup-password" placeholder="Create Password" required>
+                <input type="password" id="confirm-password" placeholder="Confirm Password" required>
                 <button type="submit">Sign Up</button>
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('signup-username').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password === confirmPassword) {
+                // Get existing users or create an empty array
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+
+                // Check if username already exists
+                const userExists = users.some(user => user.username === username);
+                if (userExists) {
+                    alert('Username already exists. Please choose a different one.');
+                } else {
+                    // Store the new user
+                    users.push({ username, password });
+                    localStorage.setItem('users', JSON.stringify(users));
+                    alert('Account created successfully! You can now log in.');
+                    window.location.href = 'login.html'; // Redirect to login page after signup
+                }
+            } else {
+                alert('Passwords do not match.');
+            }
+        });
+    </script>
 </body>
 </html>
