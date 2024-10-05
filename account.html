@@ -4,9 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #1c1c1c;
+            color: #f1f1f1;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 50px;
+            height: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: #f1f1f1;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #4CAF50;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Reduced gap for better positioning */
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 5px; /* Space between text and buttons */
+        }
+
+        .dashboard-btn, .logout-btn {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .dashboard-btn:hover, .logout-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        /* Themed Boxes */
+        .themed-box {
+            background-color: #b9b5b51c;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .themed-box:hover {
+            background-color: #444;
+        }
+
+        .status-section {
+            text-align: center;
+        }
+
+        /* Form Styling */
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #1c1c1c;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            margin-top: 20px;
+        }
+
+        /* Feedback message */
+        .feedback {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .success {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .error {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
 </head>
 <body>
+    <!-- Navbar -->
     <div class="navbar">
         <div class="logo-container">
             <a href="index.html">
@@ -28,10 +187,134 @@
         </div>
     </div>
 
+    <!-- Main Container -->
     <div class="container">
         <h1>Welcome to your dashboard, <span id="user-welcome"></span>!</h1>
+
+        <!-- Member Status Section -->
+        <div class="status-section themed-box">
+            <h2>Your Membership Status</h2>
+            <p>Status: <strong>Active</strong></p>
+        </div>
+
+        <!-- Complaint Form -->
+        <div class="themed-box">
+            <h2>Submit a Complaint</h2>
+            <form id="complaint-form">
+                <textarea id="complaint-input" placeholder="Enter your complaint here" rows="4" required></textarea>
+                <input type="submit" value="Submit Complaint">
+                <div id="complaint-feedback" class="feedback" style="display:none;"></div>
+            </form>
+        </div>
+
+        <!-- Renewal Application Form -->
+        <div class="themed-box">
+            <h2>Renew Membership</h2>
+            <form id="renewal-form">
+                <input type="text" id="renewal-reason" placeholder="Reason for renewal" required>
+                <input type="submit" value="Send Renewal Request">
+                <div id="renewal-feedback" class="feedback" style="display:none;"></div>
+            </form>
+        </div>
     </div>
 
-    <script src="header.js"></script> <!-- Script for handling user info -->
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Your Dashboard. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Check if the user is logged in and update the UI
+        window.onload = function() {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            const usernameSpan = document.getElementById('username');
+            const userWelcomeSpan = document.getElementById('user-welcome');
+
+            if (loggedInUser) {
+                usernameSpan.textContent = loggedInUser;
+                userWelcomeSpan.textContent = loggedInUser;
+                document.getElementById('welcome-message').style.display = 'block';
+            } else {
+                document.getElementById('welcome-message').style.display = 'none';
+                // Redirect to login page or show login prompt
+                // window.location.href = 'login.html'; // Uncomment this line if you want to redirect
+            }
+        };
+
+        // Initialize local storage for complaints and renewals if they don't exist
+        if (!localStorage.getItem('complaints')) {
+            localStorage.setItem('complaints', JSON.stringify([]));
+        }
+        if (!localStorage.getItem('renewals')) {
+            localStorage.setItem('renewals', JSON.stringify([]));
+        }
+
+        // Event listener for the complaint form submission
+        document.getElementById('complaint-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            const complaint = document.getElementById('complaint-input').value.trim(); // Get the complaint text
+            const username = document.getElementById('username').innerText; // Get the username
+
+            // Check if the username is not empty
+            if (!username) {
+                showFeedback('Please log in to submit a complaint.', 'error', 'complaint-feedback');
+                return;
+            }
+
+            // Retrieve existing complaints from localStorage
+            const complaints = JSON.parse(localStorage.getItem('complaints'));
+            // Create a new complaint object
+            const newComplaint = { member: username, complaint: complaint, date: new Date().toLocaleString() };
+            // Add the new complaint to the array
+            complaints.push(newComplaint);
+            // Save the updated complaints back to localStorage
+            localStorage.setItem('complaints', JSON.stringify(complaints));
+            // Clear the input field and show success message
+            document.getElementById('complaint-input').value = '';
+            showFeedback('Your complaint has been submitted successfully!', 'success', 'complaint-feedback');
+        });
+
+        // Event listener for the renewal form submission
+        document.getElementById('renewal-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            const reason = document.getElementById('renewal-reason').value.trim(); // Get the renewal reason
+            const username = document.getElementById('username').innerText; // Get the username
+
+            // Check if the username is not empty
+            if (!username) {
+                showFeedback('Please log in to submit a renewal request.', 'error', 'renewal-feedback');
+                return;
+            }
+
+            // Retrieve existing renewals from localStorage
+            const renewals = JSON.parse(localStorage.getItem('renewals'));
+            // Create a new renewal object
+            const newRenewal = { member: username, reason: reason, date: new Date().toLocaleString() };
+            // Add the new renewal to the array
+            renewals.push(newRenewal);
+            // Save the updated renewals back to localStorage
+            localStorage.setItem('renewals', JSON.stringify(renewals));
+            // Clear the input field and show success message
+            document.getElementById('renewal-reason').value = '';
+            showFeedback('Your renewal request has been sent successfully!', 'success', 'renewal-feedback');
+        });
+
+        // Function to show feedback messages
+        function showFeedback(message, type, feedbackElementId) {
+            const feedbackElement = document.getElementById(feedbackElementId);
+            feedbackElement.textContent = message;
+            feedbackElement.className = `feedback ${type}`;
+            feedbackElement.style.display = 'block';
+            setTimeout(() => {
+                feedbackElement.style.display = 'none';
+            }, 3000); // Hide after 3 seconds
+        }
+
+        // Logout button functionality
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('loggedInUser'); // Remove the logged-in user
+            window.location.href = 'login.html'; // Redirect to the login page
+        });
+    </script>
 </body>
 </html>

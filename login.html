@@ -45,7 +45,13 @@
 
             if (loggedInUser) {
                 localStorage.setItem('loggedInUser', username); // Store the logged-in user
-                window.location.href = 'account.html'; // Redirect to account page after login
+                
+                // Check if the logged-in user is an admin
+                if (loggedInUser.role === 'admin') {
+                    window.location.href = 'administratordashboard.html'; // Redirect to admin dashboard
+                } else {
+                    window.location.href = 'account.html'; // Redirect to account page for members
+                }
             } else {
                 alert('Invalid login credentials');
             }

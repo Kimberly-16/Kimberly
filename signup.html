@@ -4,25 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Body Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('hd.jpg'); /* Replace with your image URL */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the image */
+            padding: 50px;
+            display: flex;
+            flex-direction: column; /* Stack header and signup box vertically */
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Center vertically */
+            margin: 0;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            width: 100%; /* Full width */
+            position: absolute; /* Position it in the upper left */
+            top: 20px; /* Space from the top */
+            left: 20px; /* Space from the left */
+        }
+
+        /* Navbar links */
+        .nav-links {
+            display: flex;
+            gap: 20px; /* Spacing between links */
+        }
+
+        .nav-link {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(0, 230, 118, 0.8);
+            color: #000;
+            border-radius: 5px;
+            transform: scale(1.05); /* Slightly enlarge on hover for effect */
+        }
+
+        /* Signup Box Styles */
+        .signup-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            background: rgba(53, 51, 51, 0.664); /* Glassmorphism effect */
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(136, 110, 110, 0.6), 0 0 40px rgba(3, 209, 245, 0.6); /* Glowing shadow */
+            text-align: center;
+        }
+
+        /* Header Styles */
+        .signup-box h2 {
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
+
+        /* Form Styles */
+        .signup-box form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Input Styles */
+        input[type="text"], input[type="password"], select {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.2); /* Same background for select */
+            color: #fff;
+            font-size: 1em;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: #ccc;
+        }
+
+        /* Input Focus Styles */
+        input:focus, select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            color: #0f0e0e;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.6);
+        }
+
+        /* Button Styles */
+        button {
+            padding: 15px 30px;
+            background-color: #407ceb;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.4s ease;
+        }
+
+        button:hover {
+            background-color: #255dd4;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 230, 118, 0.66), 0 0 30px rgba(0, 230, 118, 0.6);
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
+
+    <nav class="navbar">
+        <div class="nav-links">
             <a href="index.html" class="nav-link">Back to Home</a>
         </div>
-    </header>
+    </nav>
 
-    <div class="container">
-        <div class="signup-box">
-            <h2>Create Account</h2>
-            <form id="signup-form">
-                <input type="text" id="signup-username" placeholder="Create Username" required>
-                <input type="password" id="signup-password" placeholder="Create Password" required>
-                <input type="password" id="confirm-password" placeholder="Confirm Password" required>
-                <button type="submit">Sign Up</button>
-            </form>
-        </div>
+    <div class="signup-box">
+        <h2>Register For A Passport</h2>
+        <form id="signup-form">
+            <input type="text" id="signup-username" placeholder="Create Username" required>
+            <input type="password" id="signup-password" placeholder="Create Password" required>
+            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+
+            <!-- Role Selection: Member or Administrator -->
+            <select id="user-role" required>
+                <option value="" disabled selected>Select Role</option>
+                <option value="member">Member</option>
+                <option value="admin">Administrator</option>
+            </select>
+
+            <button type="submit">Sign Up</button>
+        </form>
     </div>
 
     <script>
@@ -32,7 +151,9 @@
             const username = document.getElementById('signup-username').value;
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
+            const role = document.getElementById('user-role').value;
 
+            // Check if password and confirmation match
             if (password === confirmPassword) {
                 // Get existing users or create an empty array
                 const users = JSON.parse(localStorage.getItem('users')) || [];
@@ -42,11 +163,15 @@
                 if (userExists) {
                     alert('Username already exists. Please choose a different one.');
                 } else {
-                    // Store the new user
-                    users.push({ username, password });
+                    // Store the new user with their role (member or admin)
+                    users.push({ username, password, role });
                     localStorage.setItem('users', JSON.stringify(users));
-                    alert('Account created successfully! You can now log in.');
-                    window.location.href = 'login.html'; // Redirect to login page after signup
+
+                    // Show the alert with the username and password
+                    alert(`Your application ID is: ${username}\nYour password is: ${password}\nYou can now log in as a ${role}.`);
+
+                    // Redirect to login page after signup
+                    window.location.href = 'login.html';
                 }
             } else {
                 alert('Passwords do not match.');
