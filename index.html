@@ -31,7 +31,8 @@
             <div class="auth-buttons">
                 <span id="user-info" class="user-info" style="display: none;">
                     <span class="username" id="username-display"></span>
-                    <a href="account.html" class="nav-link">Dashboard</a>
+                    <a href="account.html" id="dashboard-btn" class="nav-link">Dashboard</a>
+                    <a href="administratordashboard.html" id="admin-account-btn" class="nav-link" style="display: none;">Account</a>
                     <button id="logout-btn" class="logout-btn">Logout</button>
                 </span>
                 <a href="login.html" class="login-btn" id="login-btn" style="display: inline;" data-translate="login">Login</a>
@@ -95,20 +96,33 @@
         // Function to handle user login state
         function checkUserLogin() {
             const loggedInUser = localStorage.getItem('loggedInUser');
+            const users = JSON.parse(localStorage.getItem('users')) || [];
             const userInfo = document.getElementById('user-info');
             const usernameDisplay = document.getElementById('username-display');
             const loginBtn = document.getElementById('login-btn');
             const signupBtn = document.getElementById('signup-btn');
+            const dashboardBtn = document.getElementById('dashboard-btn');
+            const adminAccountBtn = document.getElementById('admin-account-btn');
 
             if (loggedInUser) {
+                const user = users.find(user => user.username === loggedInUser);
                 usernameDisplay.textContent = loggedInUser;
-                userInfo.style.display = 'block';
-                loginBtn.style.display = 'none';
-                signupBtn.style.display = 'none';
+
+                if (user && user.role === 'admin') {
+                    dashboardBtn.style.display = 'none'; // Hide Dashboard button
+                    adminAccountBtn.style.display = 'inline'; // Show Account button for admin
+                } else {
+                    dashboardBtn.style.display = 'inline'; // Show Dashboard button for normal users
+                    adminAccountBtn.style.display = 'none'; // Hide Account button
+                }
+
+                userInfo.style.display = 'block'; // Show logged-in info
+                loginBtn.style.display = 'none'; // Hide login button
+                signupBtn.style.display = 'none'; // Hide sign-up button
             } else {
-                userInfo.style.display = 'none';
-                loginBtn.style.display = 'inline';
-                signupBtn.style.display = 'inline';
+                userInfo.style.display = 'none'; // Hide logged-in info
+                loginBtn.style.display = 'inline'; // Show login button
+                signupBtn.style.display = 'inline'; // Show sign-up button
             }
         }
 
