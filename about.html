@@ -16,9 +16,9 @@
 
         .container {
             max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: rgba(169, 168, 168, 0.214);
+            margin: 20px auto;
+            padding: 10px;
+            background-color: rgba(169, 168, 168, 0.625);
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(216, 4, 4, 0.842);
             transition: box-shadow 0.3s ease;
@@ -28,6 +28,13 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
+        .about-content {
+            display: flex; /* Use flexbox for alignment */
+            flex-direction: column; /* Align children in a column */
+            align-items: center; /* Center horizontally */
+            text-align: center; /* Center text */
+        }
+
         .about-content h2, .about-content h3 {
             color: black; /* Change heading color to black */
         }
@@ -35,6 +42,7 @@
         .about-content p {
             color: black; /* Change paragraph color to black */
             line-height: 1.6;
+            max-width: 700px; /* Optional: Limit paragraph width for better readability */
         }
 
         .show-more-btn {
@@ -62,6 +70,9 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             color: black; /* Change description text color to black */
+            text-align: left; /* Align text to the left inside description */
+            width: 100%; /* Full width inside container */
+            max-width: 700px; /* Optional: Limit description width for better readability */
         }
     </style>
 </head>

@@ -18,7 +18,8 @@
             <a href="about.html" class="nav-link" data-translate="about">About Us</a>
             <a href="passport-offices.html" class="nav-link" data-translate="passportOffices">Passport Offices</a>
             <a href="contact.html" class="nav-link" data-translate="contact">Contact Us</a>
-            <a href="apply.html" class="nav-link" data-translate="apply">Apply</a> <!-- Added Apply link -->
+            <a href="apply.html" class="nav-link" data-translate="apply">Apply</a>
+            <a href="renew.html" class="nav-link" data-translate="renew">Renew Passport</a>
         </div>
         <div class="header-right">
             <div class="language-selector">
@@ -50,8 +51,8 @@
 
     <div class="container">
         <div class="search-box">
-            <input type="text" placeholder="Enter Tracking Number">
-            <button>Search</button>
+            <input type="text" id="tracking-input" placeholder="Enter Tracking Number">
+            <button id="search-btn">Search</button>
             <div id="result">Results will appear here</div>
         </div>
     </div>
@@ -64,7 +65,8 @@
                 about: "About Us",
                 passportOffices: "Passport Offices",
                 contact: "Contact Us",
-                apply: "Apply", // Added Apply translation in English
+                apply: "Apply",
+                renew: "Renew Passport",
                 login: "Login",
                 signup: "Sign Up",
             },
@@ -73,7 +75,8 @@
                 about: "Acerca de",
                 passportOffices: "Oficinas de Pasaporte",
                 contact: "Contáctenos",
-                apply: "Aplicar", // Added Apply translation in Spanish
+                apply: "Aplicar",
+                renew: "Renovar Pasaporte",
                 login: "Iniciar Sesión",
                 signup: "Regístrate",
             },
@@ -82,7 +85,8 @@
                 about: "私たちについて",
                 passportOffices: "パスポートオフィス",
                 contact: "お問い合わせ",
-                apply: "申し込む", // Added Apply translation in Japanese
+                apply: "申し込む",
+                renew: "パスポートを更新する",
                 login: "ログイン",
                 signup: "サインアップ",
             }
@@ -148,6 +152,26 @@
         document.getElementById('logout-btn').addEventListener('click', function() {
             localStorage.removeItem('loggedInUser'); // Clear the logged-in user
             window.location.href = 'login.html'; // Redirect to the login page
+        });
+
+        // Search functionality for tracking number
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const trackingNumber = document.getElementById('tracking-input').value.trim();
+            const applications = JSON.parse(localStorage.getItem('passportApplications')) || [];
+            const resultElement = document.getElementById('result');
+
+            if (trackingNumber) {
+                const application = applications.find(app => app.trackingNumber === trackingNumber);
+
+                if (application) {
+                    const status = application.status === undefined ? "Under Review" : application.status;
+                    resultElement.innerHTML = `Your application for a ${application.passportType} is currently ${status}.`;
+                } else {
+                    resultElement.innerHTML = 'No application found with this tracking number.';
+                }
+            } else {
+                resultElement.innerHTML = 'Please enter a tracking number.';
+            }
         });
     </script>
 </body>

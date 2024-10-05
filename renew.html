@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apply for a Passport</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Linking to external stylesheet -->
+    <title>Renew Passport</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
+        /* Set background image for the body */
+        body {
+            background-image: url('pass.jpg'); /* Replace with your image path */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent tiling */
+            font-family: Arial, sans-serif; /* Set a default font */
+        }
+
         /* Navbar styling */
         .navbar {
             display: flex;
@@ -50,30 +59,18 @@
             margin-top: 80px; /* To ensure header is not hidden under fixed navbar */
             padding: 20px;
             text-align: center; /* Center text */
-        }
-
-        /* Logo container styling */
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo {
-            width: 60px; /* Slightly larger logo for more impact */
-            height: auto;
-        }
-
-        /* Align navigation and other items in header-right */
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            color: #141313; /* White text for better contrast */
         }
 
         /* Form Styling */
         .container {
+            max-width: 800px; /* Limit width of the form */
             padding: 20px;
-            margin-top: 20px;
+            margin: 10px auto; /* Center the container */
+            background-color: rgba(44, 44, 44, 0.8); /* Transparent background */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
         }
 
         .form-group {
@@ -83,6 +80,7 @@
         label {
             display: block;
             margin-bottom: 5px;
+            color: #fff; /* White text for labels */
         }
 
         input, select {
@@ -133,31 +131,27 @@
 </head>
 <body>
     <div class="navbar">
-        <div class="logo-container">
-            <a href="index.html">
-                <img src="2.webp" alt="Logo" class="logo">
-            </a>
-        </div>
         <div class="nav-links">
-            <a href="index.html" class="nav-link" data-translate="home">Home</a>
-            <a href="about.html" class="nav-link" data-translate="about">About Us</a>
-            <a href="passport-offices.html" class="nav-link" data-translate="passportOffices">Passport Offices</a>
-            <a href="contact.html" class="nav-link" data-translate="contact">Contact Us</a>
-            <a href="application-status.html" class="nav-link" data-translate="apply">Application Status</a> <!-- Application Status Link -->
-            <a href="renewal-status.html" class="nav-link" data-translate="renewal">Renewal Status</a> <!-- New Renewal Status Link -->
-            <a href="recent-applications.html" class="nav-link" id="recent-applications" data-translate="recent" style="display: none;">Recent Applications</a> <!-- Hide by default -->
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="passport-offices.html" class="nav-link">Passport Offices</a>
+            <a href="contact.html" class="nav-link">Contact Us</a>
+            <a href="apply.html" class="nav-link">Apply</a>
+            <a href="renew.html" class="nav-link">Renew</a>
         </div>
     </div>
 
-    <header class="header">
-        <div class="header-content">
-            <h1>Apply for a Passport</h1>
-            <p>Fill out the form below to apply for a passport.</p>
-        </div>
-    </header>
+    <div class="header-content">
+        <h1>Renew Your Passport</h1>
+    </div>
 
     <div class="container">
-        <form id="passport-application-form">
+        <form id="passport-renewal-form">
+            <div class="form-group">
+                <label for="old-passport-number">Old Passport Number:</label>
+                <input type="text" id="old-passport-number" name="old-passport-number" required>
+            </div>
+
             <div class="form-group">
                 <label for="first-name">First Name:</label>
                 <input type="text" id="first-name" name="first-name" required>
@@ -188,78 +182,33 @@
                 <input type="text" id="address" name="address" required>
             </div>
 
-            <div class="form-group">
-                <label for="passport-type">Passport Type:</label>
-                <select id="passport-type" name="passport-type" required>
-                    <option value="standard">Standard Passport</option>
-                    <option value="diplomatic">Diplomatic Passport</option>
-                    <option value="official">Official Passport</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="delivery-option">Delivery Option:</label>
-                <select id="delivery-option" name="delivery-option" required>
-                    <option value="standard">Standard (7-10 business days)</option>
-                    <option value="express">Express (3-5 business days)</option>
-                    <option value="urgent">Urgent (1-2 business days)</option>
-                </select>
-            </div>
-
-            <button type="submit">Submit Application</button>
+            <button type="submit">Renew Passport</button>
         </form>
 
         <div id="result"></div>
     </div>
 
     <script>
-        // Simulating login status (Change this variable to control the visibility of "Recent Applications")
-        const isLoggedIn = true; // Set to true if the user is logged in, false if not
-
-        // Hide "Recent Applications" if the user is logged in
-        if (isLoggedIn) {
-            document.getElementById('recent-applications').style.display = 'none';
-        }
-
-        document.getElementById('passport-application-form').addEventListener('submit', function(event) {
+        document.getElementById('passport-renewal-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
 
             // Collect form data
             const formData = new FormData(event.target);
-
             const data = {
+                oldPassportNumber: formData.get('old-passport-number'),
                 firstName: formData.get('first-name'),
                 lastName: formData.get('last-name'),
                 dateOfBirth: formData.get('date-of-birth'),
                 email: formData.get('email'),
                 phone: formData.get('phone'),
                 address: formData.get('address'),
-                passportType: formData.get('passport-type'),
-                deliveryOption: formData.get('delivery-option')
             };
 
-            // Generate a random tracking number
-            const trackingNumber = 'TRACK-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-
-            // Add tracking number to data
-            data.trackingNumber = trackingNumber;
-
-            // Retrieve existing applications from local storage
-            let applications = JSON.parse(localStorage.getItem('passportApplications')) || [];
-
-            // Add new application to the array
-            applications.push(data);
-
-            // Save updated applications back to local storage
-            localStorage.setItem('passportApplications', JSON.stringify(applications));
-
-            // Show alert with tracking number
-            alert('Your application has been submitted successfully!\nTracking Number: ' + trackingNumber);
-
-            // Redirect to application-status.html after submission
-            window.location.href = 'application-status.html';
+            // Here you would typically send the data to your server
+            // For this example, we're just showing an alert
+            alert('Your renewal application has been submitted successfully!\nOld Passport Number: ' + data.oldPassportNumber);
+        
         });
     </script>
-    
 </body>
 </html>
