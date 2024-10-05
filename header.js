@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const loggedInUser = localStorage.getItem('loggedInUser'); // Fetch the username from localStorage
     const headerContent = document.querySelector('.header-content'); // Header element for navigation links

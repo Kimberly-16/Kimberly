@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for a Passport</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Linking to external stylesheet -->
+    <style>
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between; /* Space out items */
+            align-items: center;
+            background-color: rgba(141, 136, 136, 0.075);
+            padding: 10px;
+            border-bottom: 2px solid rgba(141, 136, 136, 0.075); /* Futuristic bottom border */
+            position: fixed; /* Fix the navbar to the top */
+            width: 100%; /* Ensure full-width */
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Ensure it stays above other elements */
+        }
+
+        /* Navbar links */
+        .nav-links {
+            display: flex;
+            gap: 20px; /* Spacing between links */
+        }
+
+        .nav-link {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(0, 230, 118, 0.8);
+            color: #000;
+            border-radius: 5px;
+            transform: scale(1.05); /* Slightly enlarge on hover for effect */
+        }
+
+        /* Header content container to align items */
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Center align the items */
+            margin-top: 80px; /* To ensure header is not hidden under fixed navbar */
+            padding: 20px;
+        }
+
+        /* Logo container styling */
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 60px; /* Slightly larger logo for more impact */
+            height: auto;
+        }
+
+        /* Align navigation and other items in header-right */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Form Styling */
+        .container {
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;  
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(130, 126, 126, 0.755); /* Semi-transparent background for input and select */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Light semi-transparent border */
+            border-radius: 5px;
+            color: #fff; /* Text color */
+            font-size: 1em;
+            transition: background-color 0.3s, border 0.3s; /* Smooth transitions */
+        }
+
+        /* Change background color for options */
+        select option {
+            background-color: rgba(130, 126, 126, 0.755); /* Match the select background */
+            color: #fff; /* Text color */
+        }
+
+        /* Add focus styles */
+        input:focus, select:focus {
+            background-color: rgba(255, 255, 255, 0.2); /* Slightly opaque when focused */
+            border-color: rgba(255, 255, 255, 0.5); /* Highlight border on focus */
+            outline: none; /* Remove default outline */
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Adding some margin to the result section */
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="2.webp" alt="Logo" class="logo">
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link" data-translate="home">Home</a>
+            <a href="about.html" class="nav-link" data-translate="about">About Us</a>
+            <a href="passport-offices.html" class="nav-link" data-translate="passportOffices">Passport Offices</a>
+            <a href="contact.html" class="nav-link" data-translate="contact">Contact Us</a>
+            <a href="apply.html" class="nav-link" data-translate="apply">Apply</a>
+            <a href="recent-applications.html" class="nav-link" id="recent-applications" data-translate="recent" style="display: none;">Recent Applications</a> <!-- Hide by default -->
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1>Apply for a Passport</h1>
+            <p>Fill out the form below to apply for a passport.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <form id="passport-application-form">
+            <div class="form-group">
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" name="first-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" name="last-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="date-of-birth">Date of Birth:</label>
+                <input type="date" id="date-of-birth" name="date-of-birth" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="passport-type">Passport Type:</label>
+                <select id="passport-type" name="passport-type" required>
+                    <option value="standard">Standard Passport</option>
+                    <option value="diplomatic">Diplomatic Passport</option>
+                    <option value="official">Official Passport</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="delivery-option">Delivery Option:</label>
+                <select id="delivery-option" name="delivery-option" required>
+                    <option value="standard">Standard (7-10 business days)</option>
+                    <option value="express">Express (3-5 business days)</option>
+                    <option value="urgent">Urgent (1-2 business days)</option>
+                </select>
+            </div>
+
+            <button type="submit">Submit Application</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Simulating login status (Change this variable to control the visibility of "Recent Applications")
+        const isLoggedIn = true; // Set to true if the user is logged in, false if not
+
+        // Hide "Recent Applications" if the user is logged in
+        if (isLoggedIn) {
+            document.getElementById('recent-applications').style.display = 'none';
+        }
+
+        document.getElementById('passport-application-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Collect form data
+            const formData = new FormData(event.target);
+
+            const data = {
+                firstName: formData.get('first-name'),
+                lastName: formData.get('last-name'),
+                dateOfBirth: formData.get('date-of-birth'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                address: formData.get('address'),
+                passportType: formData.get('passport-type'),
+                deliveryOption: formData.get('delivery-option')
+            };
+
+            // Retrieve existing applications from local storage
+            let applications = JSON.parse(localStorage.getItem('passportApplications')) || [];
+
+            // Add new application to the array
+            applications.push(data);
+
+            // Save updated applications back to local storage
+            localStorage.setItem('passportApplications', JSON.stringify(applications));
+
+            // Output the result
+            document.getElementById('result').textContent = `Application submitted for ${data.firstName} ${data.lastName}. Type: ${data.passportType}, Delivery: ${data.deliveryOption}.`;
+        });
+    </script>
+</body>
+</html>

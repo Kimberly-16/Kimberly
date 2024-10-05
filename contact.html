@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparent Image Gallery</title>
+    <style>
+        /* Background Image */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('hd.jpg'); /* Add your background image here */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh; /* Full-screen height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Overlay for better readability */
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        /* Center gallery container */
+        .gallery-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Gallery container style */
+        .gallery-container {
+            display: flex; /* Use flex for layout */
+            flex-direction: row; /* Align items horizontally */
+            align-items: center; /* Center items vertically */
+            gap: 40px; /* Space between items */
+            max-width: 800px; /* Adjusted for three gallery items */
+            padding: 20px;
+            position: relative;
+            z-index: 1; /* Ensure gallery stays above the overlay */
+            text-align: center; /* Center the text */
+        }
+
+        /* Transparent gallery item */
+        .gallery-item {
+            display: flex;
+            flex-direction: column; /* Stack image and text vertically */
+            justify-content: center;
+            align-items: center;
+            padding: 40px; /* Increased padding */
+            border-radius: 10px;
+            background-color: rgba(218, 216, 216, 0.105); /* Semi-transparent background */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(164, 11, 11, 0.914);
+        }
+
+        .gallery-image {
+            margin-bottom: 20px; /* Space below the image */
+        }
+
+        .circle-image {
+            width: 200px; /* Larger size */
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 2px 4px rgb(201, 12, 12);
+        }
+
+        .gallery-description h3 {
+            margin: 0 0 10px;
+            font-size: 2rem;
+        }
+
+        .gallery-description p {
+            margin: 0;
+            color: #fff; /* White text to stand out on the semi-transparent background */
+            font-size: 1.2rem;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 600px) {
+            .gallery-container {
+                flex-direction: row; /* Maintain row layout */
+            }
+        }
+
+        @media (min-width: 900px) {
+            .gallery-container {
+                flex-direction: row; /* Maintain row layout */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay for readability -->
+    <div class="overlay"></div>
+
+    <!-- Wrapper to center the gallery -->
+    <div class="gallery-wrapper">
+        <!-- Image Gallery -->
+        <div class="gallery-container">
+            <div class="gallery-item">
+                <div class="gallery-image">
+                    <img src="phone.png" alt="Image 1" class="circle-image">
+                </div>
+                <div class="gallery-description">
+                    <h3>Contact</h3>
+                    <p>Phone +639637725400 </p> 
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-image">
+                    <img src="email1.png"Image 2" class="circle-image">
+                </div>
+                <div class="gallery-description">
+                    <h3>Email</h3>
+                    <p>Kimberlyannetabanao42@gmail</p> <p> Mauriceann03@gmail.com</p> 
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-image">
+                    <img src="pass1.jpg" alt="Image 3" class="circle-image">
+                </div>
+                <div class="gallery-description">
+                    <h3>Location</h3>
+                    <p>Quezon City, Metro Manila, Philippines</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

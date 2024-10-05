@@ -162,6 +162,18 @@
             background-color: #f44336;
             color: white;
         }
+
+        /* Admin Replies Section */
+        .admin-replies {
+            margin-top: 20px;
+        }
+
+        .admin-reply {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #444;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -216,6 +228,14 @@
                 <div id="renewal-feedback" class="feedback" style="display:none;"></div>
             </form>
         </div>
+
+        <!-- Admin Replies Section -->
+        <div class="admin-replies themed-box">
+            <h2>Administrator Replies</h2>
+            <div id="admin-replies-container">
+                <!-- Admin replies will be populated here -->
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -239,6 +259,7 @@
                 // Redirect to login page or show login prompt
                 // window.location.href = 'login.html'; // Uncomment this line if you want to redirect
             }
+            displayAdminReplies(); // Call to display admin replies on load
         };
 
         // Initialize local storage for complaints and renewals if they don't exist
@@ -247,6 +268,9 @@
         }
         if (!localStorage.getItem('renewals')) {
             localStorage.setItem('renewals', JSON.stringify([]));
+        }
+        if (!localStorage.getItem('adminReplies')) {
+            localStorage.setItem('adminReplies', JSON.stringify([]));
         }
 
         // Event listener for the complaint form submission
@@ -272,6 +296,9 @@
             // Clear the input field and show success message
             document.getElementById('complaint-input').value = '';
             showFeedback('Your complaint has been submitted successfully!', 'success', 'complaint-feedback');
+
+            // Optionally: Add a dummy reply from admin (for demonstration)
+            addAdminReply(newComplaint);
         });
 
         // Event listener for the renewal form submission
@@ -309,6 +336,67 @@
                 feedbackElement.style.display = 'none';
             }, 3000); // Hide after 3 seconds
         }
+
+        // Function to display admin replies
+        function displayAdminReplies() {
+            const adminRepliesContainer = document.getElementById('admin-replies-container');
+            const adminReplies = JSON.parse(localStorage.getItem('adminReplies')) || [];
+
+            // Clear the container first
+            adminRepliesContainer.innerHTML = '';
+
+            // Populate the replies
+            adminReplies.forEach(reply => {
+                const replyElement = document.createElement('div');
+                replyElement.className = 'admin-reply';
+                replyElement.innerHTML = `<strong>Admin:</strong> ${reply.message} <em>(${reply.date})</em>`;
+                adminRepliesContainer.appendChild(replyElement);
+            });
+        }
+
+     // Function to display admin replies
+function displayAdminReplies() {
+    const adminRepliesContainer = document.getElementById('admin-replies-container');
+    const adminReplies = JSON.parse(localStorage.getItem('adminReplies')) || [];
+
+    // Clear the container first
+    adminRepliesContainer.innerHTML = '';
+
+    // Populate the replies
+    adminReplies.forEach(reply => {
+        const replyElement = document.createElement('div');
+        replyElement.className = 'admin-reply';
+        replyElement.innerHTML = `<strong>Admin:</strong> ${reply.message} <em>(${reply.date})</em>`;
+        adminRepliesContainer.appendChild(replyElement);
+    });
+}
+
+// Event listener for the complaint form submission
+document.getElementById('complaint-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+    const complaint = document.getElementById('complaint-input').value.trim(); // Get the complaint text
+    const username = document.getElementById('username').innerText; // Get the username
+
+    // Check if the username is not empty
+    if (!username) {
+        showFeedback('Please log in to submit a complaint.', 'error', 'complaint-feedback');
+        return;
+    }
+
+    // Retrieve existing complaints from localStorage
+    const complaints = JSON.parse(localStorage.getItem('complaints'));
+    // Create a new complaint object
+    const newComplaint = { member: username, complaint: complaint, date: new Date().toLocaleString() };
+    // Add the new complaint to the array
+    complaints.push(newComplaint);
+    // Save the updated complaints back to localStorage
+    localStorage.setItem('complaints', JSON.stringify(complaints));
+    // Clear the input field and show success message
+    document.getElementById('complaint-input').value = '';
+    showFeedback('Your complaint has been submitted successfully!', 'success', 'complaint-feedback');
+
+    // Instead of adding a dummy reply, you would fetch actual replies from the server or another source here
+});
 
         // Logout button functionality
         document.getElementById('logout-btn').addEventListener('click', function() {

@@ -49,7 +49,7 @@
             gap: 20px;
         }
 
-        .dashboard-btn, .logout-btn {
+        .dashboard-btn, .logout-btn, .recent-application-btn {
             background-color: #4CAF50;
             color: #fff;
             padding: 10px 20px;
@@ -58,7 +58,7 @@
             transition: background-color 0.3s ease;
         }
 
-        .dashboard-btn:hover, .logout-btn:hover {
+        .dashboard-btn:hover, .logout-btn:hover, .recent-application-btn:hover {
             background-color: #45a049;
         }
 
@@ -111,6 +111,55 @@
             color: white;
         }
 
+        /* Reply Form */
+        .reply-form {
+            display: none; /* Hide reply form by default */
+            margin-top: 10px;
+        }
+
+        .reply-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        .reply-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reply-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Application Status Box */
+        .application-status {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+        }
+
+        .action-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .action-button:hover {
+            background-color: #45a049;
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -137,8 +186,10 @@
         </div>
         <div class="header-right">
             <div class="user-info" id="user-info">
-                <span id="welcome-message">Welcome back, <span id="username"></span>!</span>
-                <a href="administratordashboard.html" class="dashboard-btn">My Account</a>
+                
+                <a href="recent-applications.html" class="recent-application-btn" id="recent-application-btn">Recent Application</a>
+
+                <a href="account.html" class="dashboard-btn">My Account</a>
                 <a href="#" class="logout-btn" id="logout-btn">Logout</a>
             </div>
         </div>
@@ -156,6 +207,7 @@
                     <tr>
                         <th>Member</th>
                         <th>Complaint</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -173,12 +225,23 @@
                         <th>Member</th>
                         <th>Reason</th>
                         <th>Date</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Renewals will be populated here -->
                 </tbody>
             </table>
+        </div>
+
+        <!-- Application Status Management -->
+        <div class="themed-box application-status">
+            <h2>Application Status Management</h2>
+            <div id="recent-application">
+                <p id="recent-application-info">No recent applications found.</p>
+                <button id="accept-button" class="action-button" style="display:none;">Accept</button>
+                <button id="reject-button" class="action-button" style="display:none;">Reject</button>
+            </div>
         </div>
     </div>
 
@@ -198,9 +261,16 @@
             tableBody.innerHTML = '';
 
             // Append complaints to the table
-            complaints.forEach(complaint => {
+            complaints.forEach((complaint, index) => {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td>${complaint.member}</td><td>${complaint.complaint}</td>`;
+                row.innerHTML = `<td>${complaint.member}</td>
+                                 <td>${complaint.complaint}</td>
+                                 <td><button class="reply-btn" onclick="toggleReplyForm(${index}, 'complaint')">Reply</button>
+                                     <div class="reply-form" id="reply-form-${index}">
+                                         <textarea class="reply-input" placeholder="Type your reply here..."></textarea>
+                                         <button class="reply-button" onclick="sendReply(${index}, 'complaint')">Send Reply</button>
+                                     </div>
+                                 </td>`;
                 tableBody.appendChild(row);
             });
         }
@@ -214,17 +284,90 @@
             tableBody.innerHTML = '';
 
             // Append renewals to the table
-            renewals.forEach(renewal => {
+            renewals.forEach((renewal, index) => {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td>${renewal.member}</td><td>${renewal.reason}</td><td>${renewal.date}</td>`;
+                row.innerHTML = `<td>${renewal.member}</td>
+                                 <td>${renewal.reason}</td>
+                                 <td>${renewal.date}</td>
+                                 <td><button class="reply-btn" onclick="toggleReplyForm(${index}, 'renewal')">Reply</button>
+                                     <div class="reply-form" id="reply-form-renewal-${index}">
+                                         <textarea class="reply-input" placeholder="Type your reply here..."></textarea>
+                                         <button class="reply-button" onclick="sendReply(${index}, 'renewal')">Send Reply</button>
+                                     </div>
+                                 </td>`;
                 tableBody.appendChild(row);
             });
         }
 
-        // Call the functions to display complaints and renewals when the page loads
+        // Function to fetch and display the most recent application
+        function displayRecentApplication() {
+            const applications = JSON.parse(localStorage.getItem('applications')) || [];
+            const recentApplicationInfo = document.getElementById('recent-application-info');
+            const acceptButton = document.getElementById('accept-button');
+            const rejectButton = document.getElementById('reject-button');
+
+            if (applications.length > 0) {
+                const recentApplication = applications[applications.length - 1]; // Get the most recent application
+                recentApplicationInfo.textContent = `Member: ${recentApplication.member}, Application: ${recentApplication.application}`;
+                acceptButton.style.display = 'inline-block';
+                rejectButton.style.display = 'inline-block';
+            } else {
+                recentApplicationInfo.textContent = 'No recent applications found.';
+                acceptButton.style.display = 'none';
+                rejectButton.style.display = 'none';
+            }
+        }
+
+        // Function to accept an application
+        function acceptApplication() {
+            alert('Application accepted!');
+            // Logic for accepting the application (e.g., updating the storage)
+        }
+
+        // Function to reject an application
+        function rejectApplication() {
+            alert('Application rejected!');
+            // Logic for rejecting the application (e.g., updating the storage)
+        }
+
+        // Function to toggle reply form visibility
+        function toggleReplyForm(index, type) {
+            const replyForm = document.getElementById(type === 'complaint' ? `reply-form-${index}` : `reply-form-renewal-${index}`);
+            replyForm.style.display = replyForm.style.display === 'none' || replyForm.style.display === '' ? 'block' : 'none';
+        }
+
+        // Function to send reply
+        function sendReply(index, type) {
+            const replyForm = document.getElementById(type === 'complaint' ? `reply-form-${index}` : `reply-form-renewal-${index}`);
+            const replyInput = replyForm.querySelector('.reply-input').value;
+
+            if (!replyInput.trim()) {
+                alert('Please enter a reply before sending.');
+                return;
+            }
+
+            const replies = JSON.parse(localStorage.getItem(type === 'complaint' ? 'complaintReplies' : 'renewalReplies')) || {};
+
+            // Store reply
+            if (!replies[index]) {
+                replies[index] = [];
+            }
+            replies[index].push(replyInput);
+            localStorage.setItem(type === 'complaint' ? 'complaintReplies' : 'renewalReplies', JSON.stringify(replies));
+            alert('Reply sent successfully!');
+            replyForm.querySelector('.reply-input').value = ''; // Clear input
+            toggleReplyForm(index, type); // Hide reply form
+        }
+
+        // Event listeners for accept/reject buttons
+        document.getElementById('accept-button').addEventListener('click', acceptApplication);
+        document.getElementById('reject-button').addEventListener('click', rejectApplication);
+
+        // Call the functions to display complaints, renewals, and the recent application when the page loads
         window.onload = function() {
             displayComplaints();
             displayRenewals();
+            displayRecentApplication();
         };
     </script>
 </body>

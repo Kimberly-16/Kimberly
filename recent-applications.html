@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Applications</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('hd2.jpg'); /* Add your background image URL */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat; /* Prevent tiling of the image */
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff; /* White color for the heading */
+            margin-top: 50px; /* Space above the heading */
+        }
+
+        #applications-list {
+            max-width: 600px; /* Max width for the list */
+            margin: 20px auto; /* Center the list horizontally */
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* White background with some transparency */
+            border-radius: 8px; /* Rounded corners for the box */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+        }
+
+        p {
+            margin: 5px 0; /* Spacing between paragraphs */
+            color: #333; /* Dark color for text */
+        }
+
+        hr {
+            margin: 20px 0; /* Space around horizontal rule */
+        }
+    </style>
+</head>
+<body>
+    <h1>Recent Applications</h1>
+    <div id="applications-list"></div>
+
+    <script>
+        // Fetch and display all applications from local storage
+        const applications = JSON.parse(localStorage.getItem('passportApplications'));
+        const applicationsList = document.getElementById('applications-list');
+
+        if (applications && applications.length > 0) {
+            applications.forEach(app => {
+                const appDiv = document.createElement('div');
+                appDiv.innerHTML = `
+                    <p>First Name: ${app.firstName}</p>
+                    <p>Last Name: ${app.lastName}</p>
+                    <p>Date of Birth: ${app.dateOfBirth}</p>
+                    <p>Email: ${app.email}</p>
+                    <p>Phone: ${app.phone}</p>
+                    <p>Address: ${app.address}</p>
+                    <p>Passport Type: ${app.passportType}</p>
+                    <p>Delivery Option: ${app.deliveryOption}</p>
+                    <hr>
+                `;
+                applicationsList.appendChild(appDiv);
+            });
+        } else {
+            applicationsList.textContent = 'No recent applications found.';
+        }
+    </script>
+</body>
+</html>

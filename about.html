@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Passport Tracking System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for the page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(169, 168, 168, 0.214);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(216, 4, 4, 0.842);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-content h2, .about-content h3 {
+            color: black; /* Change heading color to black */
+        }
+
+        .about-content p {
+            color: black; /* Change paragraph color to black */
+            line-height: 1.6;
+        }
+
+        .show-more-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .show-more-btn:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .objective-description {
+            display: none; /* Hide description by default */
+            margin-top: 20px;
+            background-color: #9c9d9e2d;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: black; /* Change description text color to black */
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="2.webp" alt="Logo" class="logo">
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link" data-translate="home">Home</a>
+            <a href="about.html" class="nav-link" data-translate="about">About Us</a>
+            <a href="passport-offices.html" class="nav-link" data-translate="passportOffices">Passport Offices</a>
+            <a href="contact.html" class="nav-link" data-translate="contact">Contact Us</a>
+        </div>
+        <div class="header-right">
+            <div class="language-selector">
+                <img id="selected-flag" src="usa.jpg" alt="Selected Language" class="flag">
+                <select id="language-dropdown">
+                    <option value="en" data-flag="usa.jpg">English</option>
+                    <option value="es" data-flag="Spain_flag_300.png">Español</option>
+                    <option value="ja" data-flag="japan.png">日本語</option>
+                </select>
+            </div>
+            <div class="auth-buttons">
+                <span id="user-info" class="user-info" style="display: none;">
+                    <span class="username" id="username-display"></span>
+                    <a href="account.html" class="nav-link">Dashboard</a>
+                    <button id="logout-btn" class="logout-btn">Logout</button>
+                </span>
+                <a href="login.html" class="login-btn" id="login-btn" style="display: inline;" data-translate="login">Login</a>
+                <a href="signup.html" class="signup-btn" id="signup-btn" style="display: inline;" data-translate="signup">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <!-- Header content for About Us -->
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="about-content">
+            <h2>About Our Passport Tracking System</h2>
+            <p>Our state-of-the-art passport tracking system provides real-time updates on your passport application status. Whether you're applying for a new passport or renewing an existing one, our system is designed to keep you informed every step of the way. From the moment your application is received, you can track its progress with ease, ensuring peace of mind as you plan your travels.</p>
+
+            <h3>Our Objective</h3>
+            <button class="show-more-btn" onclick="toggleObjectiveDescription()">Show More</button>
+            <div class="objective-description" id="objective-description">
+                <p>The objective of our passport tracking system is to offer users a seamless and transparent experience, reducing uncertainty and delays. By providing accurate, up-to-date information, we aim to simplify the passport application process and improve overall satisfaction. Our goal is to empower users with the tools they need to track and manage their applications efficiently, from submission to approval.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleObjectiveDescription() {
+            const description = document.getElementById('objective-description');
+            if (description.style.display === 'none' || description.style.display === '') {
+                description.style.display = 'block'; // Show the description
+            } else {
+                description.style.display = 'none'; // Hide the description
+            }
+        }
+
+        // Similar JavaScript code as in index.html for translations, language handling, and login state management.
+    </script>
+</body>
+</html>

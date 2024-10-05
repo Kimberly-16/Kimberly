@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     const languageDropdown = document.getElementById('language-dropdown');
     const selectedFlag = document.getElementById('selected-flag');
