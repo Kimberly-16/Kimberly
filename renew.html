@@ -8,32 +8,32 @@
     <style>
         /* Set background image for the body */
         body {
-            background-image: url('pass.jpg'); /* Replace with your image path */
-            background-size: cover; /* Cover the entire viewport */
-            background-position: center; /* Center the image */
-            background-repeat: no-repeat; /* Prevent tiling */
-            font-family: Arial, sans-serif; /* Set a default font */
+            background-image: url('pass.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
         }
 
         /* Navbar styling */
         .navbar {
             display: flex;
-            justify-content: center; /* Center items in navbar */
+            justify-content: center;
             align-items: center;
             background-color: rgba(141, 136, 136, 0.075);
             padding: 10px;
-            border-bottom: 2px solid rgba(141, 136, 136, 0.075); /* Futuristic bottom border */
-            position: fixed; /* Fix the navbar to the top */
-            width: 100%; /* Ensure full-width */
+            border-bottom: 2px solid rgba(141, 136, 136, 0.075);
+            position: fixed;
+            width: 100%;
             top: 0;
             left: 0;
-            z-index: 1000; /* Ensure it stays above other elements */
+            z-index: 1000;
         }
 
         /* Navbar links */
         .nav-links {
             display: flex;
-            gap: 20px; /* Spacing between links */
+            gap: 20px;
         }
 
         .nav-link {
@@ -48,63 +48,61 @@
             background-color: rgba(0, 230, 118, 0.8);
             color: #000;
             border-radius: 5px;
-            transform: scale(1.05); /* Slightly enlarge on hover for effect */
+            transform: scale(1.05);
         }
 
         /* Header content container to align items */
         .header-content {
             display: flex;
             align-items: center;
-            justify-content: center; /* Center align the items */
-            margin-top: 80px; /* To ensure header is not hidden under fixed navbar */
+            justify-content: center;
+            margin-top: 80px;
             padding: 20px;
-            text-align: center; /* Center text */
-            color: #141313; /* White text for better contrast */
+            text-align: center;
+            color: #141313;
         }
 
         /* Form Styling */
         .container {
-            max-width: 800px; /* Limit width of the form */
+            max-width: 800px;
             padding: 20px;
-            margin: 10px auto; /* Center the container */
-            background-color: rgba(44, 44, 44, 0.8); /* Transparent background */
+            margin: 10px auto;
+            background-color: rgba(44, 44, 44, 0.8);
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
 
         .form-group {
-            margin-bottom: 15px;  
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
             margin-bottom: 5px;
-            color: #fff; /* White text for labels */
+            color: #fff;
         }
 
         input, select {
             width: 100%;
             padding: 10px;
-            background-color: rgba(130, 126, 126, 0.755); /* Semi-transparent background for input and select */
-            border: 1px solid rgba(255, 255, 255, 0.3); /* Light semi-transparent border */
+            background-color: rgba(130, 126, 126, 0.755);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 5px;
-            color: #fff; /* Text color */
+            color: #fff;
             font-size: 1em;
-            transition: background-color 0.3s, border 0.3s; /* Smooth transitions */
+            transition: background-color 0.3s, border 0.3s;
         }
 
-        /* Change background color for options */
         select option {
-            background-color: rgba(130, 126, 126, 0.755); /* Match the select background */
-            color: #fff; /* Text color */
+            background-color: rgba(130, 126, 126, 0.755);
+            color: #fff;
         }
 
-        /* Add focus styles */
         input:focus, select:focus {
-            background-color: rgba(255, 255, 255, 0.2); /* Slightly opaque when focused */
-            border-color: rgba(255, 255, 255, 0.5); /* Highlight border on focus */
-            outline: none; /* Remove default outline */
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            outline: none;
         }
 
         button[type="submit"] {
@@ -123,7 +121,6 @@
             transform: scale(1.05);
         }
 
-        /* Adding some margin to the result section */
         #result {
             margin-top: 20px;
         }
@@ -194,20 +191,40 @@
 
             // Collect form data
             const formData = new FormData(event.target);
-            const data = {
-                oldPassportNumber: formData.get('old-passport-number'),
-                firstName: formData.get('first-name'),
-                lastName: formData.get('last-name'),
-                dateOfBirth: formData.get('date-of-birth'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                address: formData.get('address'),
-            };
+            const oldPassportNumber = formData.get('old-passport-number');
 
-            // Here you would typically send the data to your server
-            // For this example, we're just showing an alert
-            alert('Your renewal application has been submitted successfully!\nOld Passport Number: ' + data.oldPassportNumber);
-        
+            // Check if the old passport number is valid
+            if (oldPassportNumber === "123456789") {
+                // Create a tracking number
+                const trackingNumber = 'TRACK-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+
+                // Create an object to store form data
+                const renewalData = {
+                    trackingNumber: trackingNumber,
+                    oldPassportNumber: oldPassportNumber,
+                    firstName: formData.get('first-name'),
+                    lastName: formData.get('last-name'),
+                    dateOfBirth: formData.get('date-of-birth'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    address: formData.get('address'),
+                };
+
+                // Retrieve existing applications from local storage or initialize an empty array
+                const existingApplications = JSON.parse(localStorage.getItem('passportApplications')) || [];
+                existingApplications.push(renewalData); // Add new application
+
+                // Save updated applications back to local storage
+                localStorage.setItem('passportApplications', JSON.stringify(existingApplications));
+                localStorage.setItem('renewalApplications', JSON.stringify([renewalData])); // Save separately for renewal applications
+
+                alert('Your renewal application has been submitted successfully!\nTracking Number: ' + trackingNumber);
+                
+                // Redirect to Renewal Application page
+                window.location.href = 'renewal-status.html'; // Change this to your desired URL
+            } else {
+                alert('Old passport invalid. Please enter the correct passport number.');
+            }
         });
     </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application Status</title>
+    <title>Renewal Application Status</title>
     <style>
         body {
             margin: 0;
@@ -49,7 +49,7 @@
         .pickup-message {
             margin-top: 20px;
             font-size: 18px;
-            color: #4caf50; /* Green for pickup message */
+            color: #4caf50;
             font-weight: bold;
         }
         .pickup-button {
@@ -91,7 +91,7 @@
 
     <!-- Main Container -->
     <div class="container">
-        <h1>Your Application Status</h1>
+        <h1>Renewal Application Status</h1>
         <div id="tracking-number" class="status-message"></div>
         <div id="application-status" class="status-message"></div>
         <div id="pickup-message" class="pickup-message"></div>
@@ -110,34 +110,30 @@
             const pickupMessageElement = document.getElementById('pickup-message');
             const pickupButton = document.getElementById('pickup-button');
 
-            // Fetch the list of applications from local storage
-            const applications = JSON.parse(localStorage.getItem('passportApplications')) || [];
-            let statusMessage = 'No applications found.'; // Default message if no applications exist
+            // Fetch the renewal application data from local storage
+            const renewalData = JSON.parse(localStorage.getItem('passportRenewalData')) || null;
+            let statusMessage = 'No application found.'; // Default message if no application exists
 
-            if (applications.length > 0) {
-                // Get the last application (most recent)
-                const lastApplication = applications[applications.length - 1];
-                
+            if (renewalData) {
                 // Display the tracking number
-                trackingNumberElement.innerHTML = `Your tracking number is: ${lastApplication.trackingNumber}`;
+                trackingNumberElement.innerHTML = `Your tracking number is: ${renewalData.trackingNumber}`;
 
-                // Set the status message based on the last application status
-                switch (lastApplication.status) {
+                // Set the status message based on the application status
+                const applicationStatus = renewalData.status; // Get the actual status from the stored data
+                switch (applicationStatus) {
                     case 'Under Review':
-                        statusMessage = `Your application for a ${lastApplication.passportType} is currently under review.`;
+                        statusMessage = `Your renewal application is currently under review.`;
                         break;
                     case 'Accepted':
-                        statusMessage = `Your application for a ${lastApplication.passportType} has been accepted.`;
-                        if (lastApplication.deliveryOption === 'pickup') {
-                            pickupMessageElement.innerHTML = "You can now pick up your passport at our partnered offices.";
-                            pickupButton.style.display = 'inline-block'; // Show the button
-                        }
+                        statusMessage = `Your renewal application has been accepted.`;
+                        pickupMessageElement.innerHTML = "You can now pick up your passport at our partnered offices.";
+                        pickupButton.style.display = 'inline-block'; // Show the button
                         break;
                     case 'Rejected':
-                        statusMessage = `Your application for a ${lastApplication.passportType} has been rejected.`;
+                        statusMessage = `Your renewal application has been rejected.`;
                         break;
                     default:
-                        statusMessage = 'Under Review.';
+                        statusMessage = 'Status unknown.';
                 }
             }
 

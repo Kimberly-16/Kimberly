@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Website</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #result {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .renew-btn {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .renew-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -51,9 +71,10 @@
 
     <div class="container">
         <div class="search-box">
-            <input type="text" id="tracking-input" placeholder="Enter Tracking Number">
+            <input type="text" id="tracking-input" placeholder="Enter Passport/Tracking Number">
             <button id="search-btn">Search</button>
             <div id="result">Results will appear here</div>
+            <button class="renew-btn" id="renew-btn" onclick="window.location.href='renew.html'">Renew Your Passport</button>
         </div>
     </div>
 
@@ -159,8 +180,13 @@
             const trackingNumber = document.getElementById('tracking-input').value.trim();
             const applications = JSON.parse(localStorage.getItem('passportApplications')) || [];
             const resultElement = document.getElementById('result');
+            const renewButton = document.getElementById('renew-btn');
 
-            if (trackingNumber) {
+            if (trackingNumber === "123456789") {
+                resultElement.innerHTML = "Your Passport Is Expired, Renew Your Password";
+                renewButton.style.display = "inline"; // Show the renew button
+            } else {
+                renewButton.style.display = "none"; // Hide the renew button
                 const application = applications.find(app => app.trackingNumber === trackingNumber);
 
                 if (application) {
@@ -169,8 +195,6 @@
                 } else {
                     resultElement.innerHTML = 'No application found with this tracking number.';
                 }
-            } else {
-                resultElement.innerHTML = 'Please enter a tracking number.';
             }
         });
     </script>

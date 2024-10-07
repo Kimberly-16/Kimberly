@@ -186,9 +186,7 @@
         </div>
         <div class="header-right">
             <div class="user-info" id="user-info">
-                
                 <a href="recent-applications.html" class="recent-application-btn" id="recent-application-btn">Recent Application</a>
-
                 <a href="account.html" class="dashboard-btn">My Account</a>
                 <a href="#" class="logout-btn" id="logout-btn">Logout</a>
             </div>
@@ -252,6 +250,11 @@
 
     <script src="header.js"></script> <!-- Script for handling user info -->
     <script>
+        // Function to get the current logged-in user
+        function getCurrentUser() {
+            return localStorage.getItem('currentUser') || 'guest'; // Assuming 'guest' as default if no user is logged in
+        }
+
         // Function to display complaints
         function displayComplaints() {
             const complaints = JSON.parse(localStorage.getItem('complaints')) || [];
@@ -299,75 +302,39 @@
             });
         }
 
-        // Function to fetch and display the most recent application
-        function displayRecentApplication() {
-            const applications = JSON.parse(localStorage.getItem('applications')) || [];
-            const recentApplicationInfo = document.getElementById('recent-application-info');
-            const acceptButton = document.getElementById('accept-button');
-            const rejectButton = document.getElementById('reject-button');
-
-            if (applications.length > 0) {
-                const recentApplication = applications[applications.length - 1]; // Get the most recent application
-                recentApplicationInfo.textContent = `Member: ${recentApplication.member}, Application: ${recentApplication.application}`;
-                acceptButton.style.display = 'inline-block';
-                rejectButton.style.display = 'inline-block';
-            } else {
-                recentApplicationInfo.textContent = 'No recent applications found.';
-                acceptButton.style.display = 'none';
-                rejectButton.style.display = 'none';
-            }
-        }
-
-        // Function to accept an application
-        function acceptApplication() {
-            alert('Application accepted!');
-            // Logic for accepting the application (e.g., updating the storage)
-        }
-
-        // Function to reject an application
-        function rejectApplication() {
-            alert('Application rejected!');
-            // Logic for rejecting the application (e.g., updating the storage)
-        }
-
         // Function to toggle reply form visibility
         function toggleReplyForm(index, type) {
-            const replyForm = document.getElementById(type === 'complaint' ? `reply-form-${index}` : `reply-form-renewal-${index}`);
-            replyForm.style.display = replyForm.style.display === 'none' || replyForm.style.display === '' ? 'block' : 'none';
+            const replyForm = document.querySelector(`#reply-form-${type === 'renewal' ? 'renewal-' : ''}${index}`);
+            replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
         }
 
-        // Function to send reply
+        // Function to send replies and save them to local storage
         function sendReply(index, type) {
-            const replyForm = document.getElementById(type === 'complaint' ? `reply-form-${index}` : `reply-form-renewal-${index}`);
-            const replyInput = replyForm.querySelector('.reply-input').value;
+            const replyInput = document.querySelector(`#reply-form-${type === 'renewal' ? 'renewal-' : ''}${index} .reply-input`);
+            const replyMessage = replyInput.value;
 
-            if (!replyInput.trim()) {
+            if (replyMessage.trim() === '') {
                 alert('Please enter a reply before sending.');
                 return;
             }
 
-            const replies = JSON.parse(localStorage.getItem(type === 'complaint' ? 'complaintReplies' : 'renewalReplies')) || {};
-
-            // Store reply
-            if (!replies[index]) {
-                replies[index] = [];
-            }
-            replies[index].push(replyInput);
-            localStorage.setItem(type === 'complaint' ? 'complaintReplies' : 'renewalReplies', JSON.stringify(replies));
+            const replies = JSON.parse(localStorage.getItem('replies')) || [];
+            replies.push({ index, type, message: replyMessage, user: getCurrentUser() });
+            localStorage.setItem('replies', JSON.stringify(replies));
+            replyInput.value = ''; // Clear the input field
             alert('Reply sent successfully!');
-            replyForm.querySelector('.reply-input').value = ''; // Clear input
-            toggleReplyForm(index, type); // Hide reply form
         }
 
-        // Event listeners for accept/reject buttons
-        document.getElementById('accept-button').addEventListener('click', acceptApplication);
-        document.getElementById('reject-button').addEventListener('click', rejectApplication);
-
-        // Call the functions to display complaints, renewals, and the recent application when the page loads
-        window.onload = function() {
+        // Fetch and display complaints and renewals on page load
+        document.addEventListener('DOMContentLoaded', () => {
             displayComplaints();
             displayRenewals();
-            displayRecentApplication();
+        });
+
+        // Logout functionality
+        document.getElementById('logout-btn').onclick = function() {
+            localStorage.removeItem('currentUser'); // Clear the user data on logout
+            window.location.href = 'index.html'; // Redirect to home
         };
     </script>
 </body>

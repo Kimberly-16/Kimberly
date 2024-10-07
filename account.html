@@ -102,6 +102,18 @@
         .status-section {
             text-align: center;
         }
+        .messages-btn {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.messages-btn:hover {
+    background-color: #45a049;
+}
 
         /* Form Styling */
         form {
@@ -162,18 +174,6 @@
             background-color: #f44336;
             color: white;
         }
-
-        /* Admin Replies Section */
-        .admin-replies {
-            margin-top: 20px;
-        }
-
-        .admin-reply {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #444;
-            border-radius: 5px;
-        }
     </style>
 </head>
 <body>
@@ -193,10 +193,12 @@
         <div class="header-right">
             <div class="user-info" id="user-info">
                 <span id="welcome-message">Welcome back, <span id="username"></span>!</span>
+                <a href="messages.html" class="messages-btn">Messages</a> <!-- Added Messages button -->
                 <a href="account.html" class="dashboard-btn">My Account</a>
                 <a href="#" class="logout-btn" id="logout-btn">Logout</a>
             </div>
         </div>
+        
     </div>
 
     <!-- Main Container -->
@@ -228,14 +230,6 @@
                 <div id="renewal-feedback" class="feedback" style="display:none;"></div>
             </form>
         </div>
-
-        <!-- Admin Replies Section -->
-        <div class="admin-replies themed-box">
-            <h2>Administrator Replies</h2>
-            <div id="admin-replies-container">
-                <!-- Admin replies will be populated here -->
-            </div>
-        </div>
     </div>
 
     <!-- Footer -->
@@ -259,7 +253,6 @@
                 // Redirect to login page or show login prompt
                 // window.location.href = 'login.html'; // Uncomment this line if you want to redirect
             }
-            displayAdminReplies(); // Call to display admin replies on load
         };
 
         // Initialize local storage for complaints and renewals if they don't exist
@@ -268,9 +261,6 @@
         }
         if (!localStorage.getItem('renewals')) {
             localStorage.setItem('renewals', JSON.stringify([]));
-        }
-        if (!localStorage.getItem('adminReplies')) {
-            localStorage.setItem('adminReplies', JSON.stringify([]));
         }
 
         // Event listener for the complaint form submission
@@ -296,9 +286,6 @@
             // Clear the input field and show success message
             document.getElementById('complaint-input').value = '';
             showFeedback('Your complaint has been submitted successfully!', 'success', 'complaint-feedback');
-
-            // Optionally: Add a dummy reply from admin (for demonstration)
-            addAdminReply(newComplaint);
         });
 
         // Event listener for the renewal form submission
@@ -335,35 +322,6 @@
             setTimeout(() => {
                 feedbackElement.style.display = 'none';
             }, 3000); // Hide after 3 seconds
-        }
-
-        // Function to display admin replies
-        function displayAdminReplies() {
-            const adminRepliesContainer = document.getElementById('admin-replies-container');
-            const adminReplies = JSON.parse(localStorage.getItem('adminReplies')) || [];
-
-            // Clear the container first
-            adminRepliesContainer.innerHTML = '';
-
-            // Populate the replies
-            adminReplies.forEach(reply => {
-                const replyElement = document.createElement('div');
-                replyElement.className = 'admin-reply';
-                replyElement.innerHTML = `<strong>Admin:</strong> ${reply.message} <em>(${reply.date})</em>`;
-                adminRepliesContainer.appendChild(replyElement);
-            });
-        }
-
-        // Function to add a dummy admin reply (for demonstration)
-        function addAdminReply(complaint) {
-            const adminReplies = JSON.parse(localStorage.getItem('adminReplies')) || [];
-            const reply = {
-                message: `Thank you for your complaint: "${complaint.complaint}". We will address it shortly.`,
-                date: new Date().toLocaleString()
-            };
-            adminReplies.push(reply);
-            localStorage.setItem('adminReplies', JSON.stringify(adminReplies));
-            displayAdminReplies(); // Refresh the display
         }
 
         // Logout button functionality
